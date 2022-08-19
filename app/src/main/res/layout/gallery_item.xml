@@ -5,7 +5,8 @@
     <data>
         <variable
             name="photos"
-            type="com.appinionbd.gallery.data.network.response.GalleryResponseItem" />
+            type="com.appinionbd.gallery.data.database.GalleryData" />
+
     </data>
 
     <LinearLayout
@@ -15,6 +16,7 @@
         android:layout_width="match_parent">
 
         <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_item"
             app:imageUrl="@{photos.urls.small_s3}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

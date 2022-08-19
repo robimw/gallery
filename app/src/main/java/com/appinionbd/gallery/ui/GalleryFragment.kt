@@ -8,12 +8,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
 import androidx.core.view.isVisible
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.appinionbd.gallery.R
+import com.appinionbd.gallery.databinding.FragmentGalleryBinding
 import com.appinionbd.gallery.toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -27,33 +29,37 @@ class GalleryFragment : Fragment() {
 
     private val galleryAdapter = GalleryAdapter()
 
+    private var binding:FragmentGalleryBinding ?=null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        return inflater.inflate(R.layout.fragment_gallery, container, false)
+        binding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.fragment_gallery,container,false)
+
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recyclerGallery:RecyclerView = view.findViewById(R.id.recycler_gallery)
+        val recyclerGallery = binding?.recyclerGallery
 
-        val loading:ProgressBar = view.findViewById(R.id.progress_bar)
-        val retryBtn:Button = view.findViewById(R.id.retry_button)
+        val loading = binding?.progressBar
+        val retryBtn = binding?.retryButton
 
-        recyclerGallery.also {
-            it.layoutManager = GridLayoutManager(requireContext(),3,GridLayoutManager.VERTICAL,false)
-            it.hasFixedSize()
-            it.adapter= galleryAdapter
+        binding?.recyclerGallery.also {
+            it?.layoutManager = GridLayoutManager(requireContext(),3,GridLayoutManager.VERTICAL,false)
+            it?.hasFixedSize()
+            it?.adapter= galleryAdapter
         }
 
-        recyclerGallery.adapter = galleryAdapter.withLoadStateFooter(
+        recyclerGallery?.adapter = galleryAdapter.withLoadStateFooter(
             footer = PagingStateAdapter{galleryAdapter.retry()}
         )
 
-        retryBtn.setOnClickListener {
+        retryBtn?.setOnClickListener {
 
             galleryAdapter.retry()
         }
@@ -72,9 +78,9 @@ class GalleryFragment : Fragment() {
             galleryAdapter.loadStateFlow.collect { loadState ->
 
                 // Show loading spinner during initial load or refresh.
-                loading.isVisible= loadState.source.refresh is LoadState.Loading
+                loading?.isVisible= loadState.source.refresh is LoadState.Loading
                 // Show the retry state if initial load or refresh fails.
-                retryBtn.isVisible=loadState.source.refresh is LoadState.Error
+                retryBtn?.isVisible=loadState.source.refresh is LoadState.Error
 
                 // Toast on any error, regardless of whether it came from RemoteMediator or PagingSource
                 val errorState = loadState.source.append as? LoadState.Error
@@ -85,7 +91,7 @@ class GalleryFragment : Fragment() {
 
                 when(errorState?.error)
                 {
-                    is HttpException-> requireView().toast("Please check your network connection")
+                    is HttpException-> requireView().toast("Network error")
                 }
 
 
@@ -93,6 +99,11 @@ class GalleryFragment : Fragment() {
 
         }
 
+    }
+
+    override fun onStop() {
+        super.onStop()
+        binding=null
     }
 
 
