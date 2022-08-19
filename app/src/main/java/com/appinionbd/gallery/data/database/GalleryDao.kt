@@ -20,6 +20,6 @@ interface GalleryDao
     suspend fun insertLastPage(data:GalleryPageData)
 
     @Query("SELECT * FROM page")
-    suspend fun getPage(): GalleryPageData
+    suspend fun getPage(): GalleryPageData?
 
 }

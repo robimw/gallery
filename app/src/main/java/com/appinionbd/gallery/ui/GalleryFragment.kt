@@ -1,6 +1,7 @@
 package com.appinionbd.gallery.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -63,10 +64,8 @@ class GalleryFragment : Fragment() {
 
         lifecycleScope.launch {
             viewmodel.photoResult.observe(viewLifecycleOwner) {
-
                 galleryAdapter.submitData(lifecycle,it)
             }
-
 
         }
 
@@ -76,8 +75,10 @@ class GalleryFragment : Fragment() {
 
                 // Show loading spinner during initial load or refresh.
                 loading?.isVisible= loadState.source.refresh is LoadState.Loading
+                        || loadState.source.append is LoadState.Loading
                 // Show the retry state if initial load or refresh fails.
-                retryBtn?.isVisible=loadState.source.refresh is LoadState.Error
+                retryBtn?.isVisible= loadState.source.refresh is LoadState.Error
+                        ||loadState.source.append is LoadState.Error
 
                 // Toast on any error, regardless of whether it came from RemoteMediator or PagingSource
                 val errorState = loadState.source.append as? LoadState.Error
@@ -102,6 +103,5 @@ class GalleryFragment : Fragment() {
         super.onStop()
         binding=null
     }
-
 
 }

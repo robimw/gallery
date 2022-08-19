@@ -1,5 +1,6 @@
 package com.appinionbd.gallery.data.repository
 
+
 import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
@@ -29,59 +30,52 @@ class GalleryMediator(
 
              when(loadType)
             {
-                LoadType.REFRESH -> null
-                LoadType.PREPEND -> null
+                LoadType.REFRESH -> loadData()
+                LoadType.PREPEND -> Unit
                 LoadType.APPEND ->
                 {
                     state.lastItemOrNull() ?: return MediatorResult.Success(endOfPaginationReached = true)
-                      val loadpage=  getKey()
-
-                    val page = loadpage.next?:1
-
-                    val apicall = api.getPhotos(page)
-
-
-                    if(apicall.isNotEmpty()) {
-
-                        Log.e("page number",page.toString())
-
-                        withContext(Dispatchers.IO)
-                        {
-
-                            try {
-                                galleryDao.insert(apicall)
-                                galleryDao.insertLastPage(GalleryPageData(0,page.plus(1),0))
-                                Log.e("database","entry okay")
-
-                            }
-                            catch (e:Exception)
-                            {
-                                Log.e("database",e.toString())
-
-                            }
-
-                        }
-                    }
+                    loadData()
                 }
             }
-
 
             MediatorResult.Success(endOfPaginationReached = true)
 
         }catch (e:Exception)
         {
-            Log.e("apierror",e.toString())
+           // Log.e("error",e.toString())
             MediatorResult.Error(e)
         }
     }
 
-    private suspend fun getKey(): GalleryPageData
+    private suspend fun getKey(): GalleryPageData?
     {
         return galleryDao.getPage()
 
-
     }
 
+    private suspend fun loadData()
+    {
+        val loadpage=  getKey()
+
+        val page = loadpage?.next?:1
+
+        val apicall = api.getPhotos(page)
+
+        if(apicall.isNotEmpty()) {
+
+            withContext(Dispatchers.IO)
+            {
+
+                galleryDao.insert(apicall)
+                galleryDao.insertLastPage(GalleryPageData(0,page.plus(1),0))
+
+            }
+        }
+
+        Log.e("page",page.toString())
+
+    }
 
 }
 

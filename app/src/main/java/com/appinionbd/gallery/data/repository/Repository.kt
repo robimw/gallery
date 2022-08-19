@@ -14,7 +14,7 @@ class Repository @Inject constructor(
 ){
     @OptIn(ExperimentalPagingApi::class)
     fun fetchRepos() = Pager(
-        config = PagingConfig(pageSize = 10, enablePlaceholders = false, prefetchDistance = 2),
+        config = PagingConfig(pageSize = 10, enablePlaceholders = false, prefetchDistance = 1),
         remoteMediator = GalleryMediator(api,gallerDao),
         pagingSourceFactory = {gallerDao.getData()}
     ).liveData
