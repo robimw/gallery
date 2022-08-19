@@ -3,11 +3,8 @@ package com.appinionbd.gallery.data.database
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.OnConflictStrategy.IGNORE
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
-import com.appinionbd.gallery.data.network.response.GalleryResponseItem
 
 @Dao
 interface GalleryDao

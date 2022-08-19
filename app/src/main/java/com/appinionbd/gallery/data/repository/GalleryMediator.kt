@@ -1,9 +1,6 @@
 package com.appinionbd.gallery.data.repository
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.util.Log
-import android.widget.ImageView
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -11,19 +8,9 @@ import androidx.paging.RemoteMediator
 import com.appinionbd.gallery.data.database.GalleryDao
 import com.appinionbd.gallery.data.database.GalleryData
 import com.appinionbd.gallery.data.database.GalleryPageData
-import com.appinionbd.gallery.data.database.RoomDB
 import com.appinionbd.gallery.data.network.PhotoApi
-import com.appinionbd.gallery.data.network.response.GalleryResponseItem
-import com.bumptech.glide.Glide
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.io.BufferedInputStream
-import java.io.ByteArrayOutputStream
-import java.io.IOException
-import java.io.InputStream
-import java.net.HttpURLConnection
-import java.net.MalformedURLException
-import java.net.URL
 
 
 @OptIn(ExperimentalPagingApi::class)
@@ -95,29 +82,6 @@ class GalleryMediator(
 
     }
 
-     private  fun getImage(imgurl: String): Bitmap? {
-        val url: URL = mStringToURL(imgurl)!!
-        val connection: HttpURLConnection?
-        try {
-            connection = url.openConnection() as HttpURLConnection
-            connection.connect()
-            val inputStream: InputStream = connection.inputStream
-            val bufferedInputStream = BufferedInputStream(inputStream)
-            return BitmapFactory.decodeStream(bufferedInputStream)
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        return null
-    }
-
-    private fun mStringToURL(string: String): URL? {
-        try {
-            return URL(string)
-        } catch (e: MalformedURLException) {
-            e.printStackTrace()
-        }
-        return null
-    }
 
 }
 

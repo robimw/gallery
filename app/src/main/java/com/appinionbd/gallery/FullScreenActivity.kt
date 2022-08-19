@@ -2,10 +2,8 @@ package com.appinionbd.gallery
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
 import androidx.databinding.DataBindingUtil
 import com.appinionbd.gallery.databinding.ActivityFullScreenBinding
-import com.appinionbd.gallery.databinding.FragmentGalleryBinding
 import com.bumptech.glide.Glide
 
 class FullScreenActivity : AppCompatActivity() {

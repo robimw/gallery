@@ -2,7 +2,6 @@ package com.appinionbd.gallery.di
 
 import android.content.Context
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.appinionbd.gallery.data.database.RoomDB
 import com.appinionbd.gallery.data.network.ApiClient
 import com.appinionbd.gallery.data.network.PhotoApi

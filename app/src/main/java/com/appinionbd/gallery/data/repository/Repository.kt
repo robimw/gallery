@@ -5,7 +5,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.liveData
 import com.appinionbd.gallery.data.database.GalleryDao
-import com.appinionbd.gallery.data.database.RoomDB
 import com.appinionbd.gallery.data.network.PhotoApi
 import javax.inject.Inject
 
