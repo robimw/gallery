@@ -66,14 +66,10 @@ class GalleryMediator @Inject constructor(
 
             }
 
-            Log.e("page", "$page")
-
-
             MediatorResult.Success(endOfPaginationReached = false)
 
         }catch (e:Exception)
         {
-            Log.e("sf",e.toString())
             MediatorResult.Error(e)
         }
     }
