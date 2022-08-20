@@ -14,12 +14,12 @@ interface GalleryDao
     fun getData(): PagingSource<Int,GalleryData>
 
     @Insert(onConflict = REPLACE)
-    suspend fun insert(image:ArrayList<GalleryData>)
+    suspend fun insert(image:List<GalleryData>)
 
     @Insert(onConflict = REPLACE)
     suspend fun insertLastPage(data:GalleryPageData)
 
-    @Query("SELECT * FROM page")
+    @Query("SELECT * FROM page WHERE id=0")
     suspend fun getPage(): GalleryPageData?
 
 }

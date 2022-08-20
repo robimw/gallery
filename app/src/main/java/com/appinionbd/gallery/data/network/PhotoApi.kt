@@ -8,7 +8,8 @@ interface PhotoApi
 {
     @GET("photos")
     suspend fun getPhotos(
-        @Query("page") page:Int?
+        @Query("page") page:Int?,
+        @Query("per_page") per_page:Int
     ): ArrayList<GalleryData>
 
 }

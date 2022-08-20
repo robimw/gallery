@@ -16,6 +16,7 @@ import com.appinionbd.gallery.R
 import com.appinionbd.gallery.databinding.FragmentGalleryBinding
 import com.appinionbd.gallery.toast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
@@ -69,16 +70,16 @@ class GalleryFragment : Fragment() {
 
         }
 
+
+
         lifecycleScope.launch {
 
             galleryAdapter.loadStateFlow.collect { loadState ->
 
                 // Show loading spinner during initial load or refresh.
-                loading?.isVisible= loadState.source.refresh is LoadState.Loading
-                        || loadState.source.append is LoadState.Loading
+                loading?.isVisible= loadState.refresh is LoadState.Loading
                 // Show the retry state if initial load or refresh fails.
-                retryBtn?.isVisible= loadState.source.refresh is LoadState.Error
-                        ||loadState.source.append is LoadState.Error
+                retryBtn?.isVisible= loadState.refresh is LoadState.Error
 
                 // Toast on any error, regardless of whether it came from RemoteMediator or PagingSource
                 val errorState = loadState.source.append as? LoadState.Error

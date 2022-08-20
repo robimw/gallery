@@ -42,6 +42,7 @@ class PagingStateAdapter(
             errorMessage.isVisible = loadState !is LoadState.Loading
             retryBtn.isVisible = loadState !is LoadState.Loading
 
+
         }
 
     }
