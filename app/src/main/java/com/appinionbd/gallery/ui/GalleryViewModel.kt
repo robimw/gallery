@@ -12,8 +12,6 @@ class GalleryViewModel @Inject constructor(
     repository: Repository
 ) : ViewModel() {
 
-
-
     val photoResult = repository.fetchRepos()
         .cachedIn(viewModelScope)
 }

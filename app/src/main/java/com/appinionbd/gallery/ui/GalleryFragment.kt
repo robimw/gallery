@@ -65,7 +65,7 @@ class GalleryFragment : Fragment() {
 
         lifecycleScope.launch {
             viewmodel.photoResult.observe(viewLifecycleOwner) {
-                galleryAdapter.submitData(lifecycle,it)
+                galleryAdapter.submitData(viewLifecycleOwner.lifecycle,it)
             }
 
         }

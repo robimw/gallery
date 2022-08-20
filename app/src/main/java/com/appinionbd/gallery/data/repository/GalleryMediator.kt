@@ -1,18 +1,15 @@
 package com.appinionbd.gallery.data.repository
 
 
-import android.util.Log
-import androidx.paging.*
-import androidx.room.Database
-import androidx.room.RoomDatabase
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.LoadType
+import androidx.paging.PagingState
+import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.appinionbd.gallery.data.database.GalleryDao
 import com.appinionbd.gallery.data.database.GalleryData
 import com.appinionbd.gallery.data.database.GalleryPageData
 import com.appinionbd.gallery.data.database.RoomDB
 import com.appinionbd.gallery.data.network.PhotoApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
